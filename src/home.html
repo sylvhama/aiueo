@@ -11,30 +11,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="my-home">
+<dom-module id="the-home">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
-
         padding: 10px;
       }
     </style>
 
     <article class="card">
       <h1>Select a Japanese syllabry</h1>
-      <p></p>
+      <p class="text-center">
+        <a class="button-link" name="hiragana" href="/practice-hiragana" drawer-toggle>
+          <paper-button class="red" raised>Practice hiragana</paper-button>
+        </a>
+      </p>
+      <p class="text-center">
+        <a class="button-link" name="katakana" href="/practice-katakana" drawer-toggle>
+          <paper-button class="red" raised>Practice katakana</paper-button>
+        </a>
+      </p>
     </article>
     <article class="card">
       <h2>About aiueO</h2>
       <p>aiueO is a <strong>progressive web app</strong> made with <a href="https://www.polymer-project.org">Polymer</a> by <a href="http://shamann.fr">Sylvain Hamann</a>.</p>
-      <p>Use this application if you need to practice your reading of <a href="https://en.wikipedia.org/wiki/Hiragana">Hiragana</a> and <a href="https://en.wikipedia.org/wiki/Katakana">Katakana</a>.</p>
+      <p>This application contains several excercice in order to practice your reading of <a href="https://en.wikipedia.org/wiki/Hiragana">Hiragana</a> and <a href="https://en.wikipedia.org/wiki/Katakana">Katakana</a>.</p>
     </article>
   </template>
 
   <script>
     Polymer({
-      is: 'my-home'
+      is: 'the-home'
     });
   </script>
 </dom-module>
