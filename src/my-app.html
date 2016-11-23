@@ -23,6 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="my-app">
   <template>
@@ -73,6 +74,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <iron-media-query query="(min-width: 641px)" query-matches="{{wide}}"></iron-media-query>
+    <iron-ajax
+        auto
+        url="../json/kana.json"
+        handle-as="json"
+        on-response="_kanaLoaded"
+        debounce-duration="300"></iron-ajax>
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -116,8 +123,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             fallback-selection="view404"
             role="main">
           <the-home name="home"></the-home>
-          <practice-hiragana name="practice-hiragana"></practice-hiragana>
-          <practice-katakana name="practice-katakana"></practice-katakana>
+          <practice-hiragana name="practice-hiragana" hiragana="{{hiragana}}"></practice-hiragana>
+          <practice-katakana name="practice-katakana" katakana="{{katakana}}"></practice-katakana>
           <view-404 name="view-404"></vivew-404>
         </iron-pages>
       </app-header-layout>
@@ -133,6 +140,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           reflectToAttribute: true,
           observer: '_pageChanged'
+        },
+        hiragana: {
+          type: Object
+        },
+        katakana: {
+          type: Object
         }
       },
 
@@ -152,6 +165,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _showPage404: function() {
         this.page = 'view-404';
+      },
+
+      _kanaLoaded: function(response) {
+        this.hiragana = response.detail.response.hiragana;
+        this.katakana = response.detail.response.katakana;
       }
     });
   </script>

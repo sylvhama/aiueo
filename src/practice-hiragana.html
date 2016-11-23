@@ -12,17 +12,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="practice-hiragana">
-  <template>
+  <template items="[[hiragana]]">
     <style include="shared-styles">
       :host {
         display: block;
-
         padding: 10px;
       }
     </style>
 
     <article class="card">
-      <h1>Practice Hiragana</h1>
+      <h1 on-click="_coco">Practice Hiragana</h1>
     </article>
   </template>
 
