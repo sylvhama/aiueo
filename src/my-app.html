@@ -24,10 +24,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="my-icons.html">
 <link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="shared-styles.html">
 
 <dom-module id="my-app">
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
         --app-primary-color: #C70024;
 
@@ -58,10 +59,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
         padding: 0 16px;
         line-height: 40px;
-        color: #C70024;
-        text-decoration: none;
-        transition: color ease .25s;
-        outline: none;
       }
 
       .my-menu a.iron-selected {
@@ -70,7 +67,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .close-button {
         font-size: 14px;
-        text-transform: capitalize;
       }
     </style>
     <iron-media-query query="(min-width: 641px)" query-matches="{{wide}}"></iron-media-query>
@@ -97,10 +93,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </iron-selector>
         <template is="dom-if" if="{{!wide}}">
           <hr>
-          <paper-button class="close-button" drawer-toggle>
-            <iron-icon icon="close" drawer-toggle></iron-icon>
-            Close the menu
+          <div class="text-center">
+            <paper-button raised class="close-button" drawer-toggle>
+              <iron-icon icon="close" drawer-toggle></iron-icon>
+              Close the menu
           </paper-button>
+          </div>
         </template>
       </app-drawer>
 
