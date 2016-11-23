@@ -20,13 +20,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="my-icons.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 
 <dom-module id="my-app">
   <template>
     <style>
       :host {
-        --app-primary-color: #4285f4;
+        --app-primary-color: #C70024;
         --app-secondary-color: black;
 
         display: block;
@@ -40,46 +42,64 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-icon-button-ink-color: white;
       }
 
+      .main-logo {
+        vertical-align: middle;
+      }
+
+      .main-title__copy {
+        vertical-align: middle;
+      }
+
       .drawer-list {
         margin: 0 20px;
       }
 
-      .drawer-list a {
-        display: block;
-
-        padding: 0 16px;
-
-        text-decoration: none;
-
-        color: var(--app-secondary-color);
-
-        line-height: 40px;
+      .my-menu {
+        text-align: left;
       }
 
-      .drawer-list a.iron-selected {
-        color: black;
+      .my-menu a {
+        display: block;
+        padding: 0 16px;
+        line-height: 40px;
+        color: #C70024;
+        text-decoration: none;
+        transition: color ease .25s;
+        outline: none;
+      }
 
+      .my-menu a.iron-selected {
         font-weight: bold;
       }
-    </style>
 
+      .close-button {
+        font-size: 14px;
+        text-transform: capitalize;
+      }
+    </style>
+    <iron-media-query query="(min-width: 641px)" query-matches="{{wide}}"></iron-media-query>
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
         pattern="/:page"
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
-
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
-      <app-drawer>
+      <app-drawer class="my-menu" align="end">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="/view1">View One</a>
-          <a name="view2" href="/view2">View Two</a>
-          <a name="view3" href="/view3">View Three</a>
-          <a name="new-view" href="/new-view">New View</a>
+          <a name="home" href="/home" drawer-toggle>Go to Homepage</a>
+          <a name="hiragana" href="/hiragana" drawer-toggle>Practice Hiragana</a>
+          <a name="katakana" href="/katakana" drawer-toggle>Practice Katakana</a>
         </iron-selector>
+        <template is="dom-if" if="{{!wide}}">
+          <hr>
+          <paper-button class="close-button" drawer-toggle>
+            <iron-icon icon="close"></iron-icon>
+            Close the menu
+          </paper-button>
+        </template>
       </app-drawer>
 
       <!-- Main content -->
@@ -87,8 +107,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
+            <div main-title>
+              <img class="main-logo" src="../images/aiueo-128.png" alt="aiueO logo" width="50" alt="50">
+              <span class="maintitle__copy">aiueO</span>
+            </div>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <div main-title>My App</div>
           </app-toolbar>
         </app-header>
 
@@ -97,10 +120,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-          <my-new-view name="new-view"></my-new-view>
+          <my-home name="home"></my-home>
+          <my-hiragana name="hiragana"></my-hiragana>
+          <my-katakana name="katakana"></my-katakana>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-header-layout>
@@ -124,7 +146,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function(page) {
-        this.page = page || 'view1';
+        this.page = page || 'home';
       },
 
       _pageChanged: function(page) {
