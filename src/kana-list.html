@@ -1,0 +1,84 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-grid/app-grid-style.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="kana-list">
+  <template items="[[kana]]">
+    <style include="shared-styles">
+      .group__name {
+        margin: 0;
+        padding: 32px 0 8px 0;
+        text-transform: capitalize;
+      }
+      .letter {
+        margin: 0;
+        border-bottom: 1px solid var(--app-light-gray);
+        padding: 8px 0;
+      }
+      .letter__name {
+        margin: 0;
+        padding-bottom: 8px;
+        text-transform: capitalize;
+      }
+      .sign.app-grid {
+        margin: 0;
+        list-style: none;
+      }
+      .sign-button {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-width: 0;
+        text-align: center;
+        display: block;
+      }
+      .sign-button__value {
+        font-weight: bold;
+        font-size: 18px;
+      }
+      .sign-button__name {
+        color: var(--app-medium-gray);
+      }
+    </style>
+
+      <template is="dom-repeat" items="{{_toArray(kana)}}" as="group">
+          <article class="group">
+            <h2 class="group__name">{{group.name}}</h2>
+            <template is="dom-repeat" items="{{_toArray(group.value)}}" as="letter">
+                <style include="app-grid-style">
+                  :host {
+                    --app-grid-columns: 5;
+                  }
+                </style>
+                <div class="letter">
+                  <h3 class="letter__name">{{letter.name}}</h3>
+                  <ul class="sign app-grid">
+                    <template is="dom-repeat" items="{{_toArray(letter.value)}}" as="sign">
+                        <li class="item">
+                          <paper-button class="sign-button">
+                            <span class="sign-button__value">{{sign.value}}</span>
+                            <br>
+                            <span class="sign-button__name">{{sign.name}}</span>
+                          </paper-button>
+                        </li>
+                    </template>
+                  </ul>
+                </div>
+            </template>
+          </article>
+      </template>
+  </template>
+  <script>
+    Polymer({
+      is: 'kana-list',
+      _toArray: function(obj) {
+        return Object.keys(obj).map(function(key) {
+          return {
+            name: key,
+            value: obj[key]
+          };
+        });
+      }
+    });
+  </script>
+</dom-module>
