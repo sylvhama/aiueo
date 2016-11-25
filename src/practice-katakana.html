@@ -1,9 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="kana-list.html">
+<link rel="import" href="change-font.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="practice-katakana">
-  <template items="[[katakana]]">
+  <template>
     <style include="shared-styles">
       :host {
         display: block;
@@ -16,13 +17,20 @@
 
     <section class="card">
       <h1 class="view-title">Practice Katakana</h1>
-      <kana-list kana="{{katakana}}"></kana-list>
+      <change-font font="{{fontSelected}}"></change-font>
+      <kana-list font="{{fontSelected}}" kana="{{katakana}}"></kana-list>
     </section>
   </template>
 
   <script>
     Polymer({
-      is: 'practice-katakana'
+      is: 'practice-katakana',
+      properties: {
+        fontSelected: {
+          type: String,
+          value: 'wf-notosansjapanese'
+        }
+      }
     });
   </script>
 </dom-module>

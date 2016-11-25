@@ -3,11 +3,11 @@
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="kana-list">
-  <template items="[[kana]]">
+  <template>
     <style include="shared-styles">
       .group__name {
         margin: 0;
-        padding: 32px 0 8px 0;
+        padding: 16px 0 8px 0;
         text-transform: capitalize;
       }
       .letter {
@@ -33,7 +33,6 @@
         display: block;
       }
       .sign-button__value {
-        font-weight: bold;
         font-size: 20px;
       }
       .sign-button__name {
@@ -57,7 +56,7 @@
                     <template is="dom-repeat" items="{{_toArray(letter.value)}}" as="sign">
                         <li class="item">
                           <paper-button class="sign-button">
-                            <span class="sign-button__value">{{sign.value}}</span>
+                            <span class$="sign-button__value {{font}}">{{sign.value}}</span>
                             <br>
                             <span class="sign-button__name">{{sign.name}}</span>
                           </paper-button>

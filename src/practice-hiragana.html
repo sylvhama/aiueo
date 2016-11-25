@@ -1,9 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="kana-list.html">
+<link rel="import" href="change-font.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="practice-hiragana">
-  <template items="[[hiragana]]">
+  <template>
     <style include="shared-styles">
       :host {
         display: block;
@@ -16,13 +17,20 @@
 
     <section class="card">
       <h1 class="view-title">Practice Hiragana</h1>
-      <kana-list kana="{{hiragana}}"></kana-list>
+      <change-font font="{{fontSelected}}"></change-font>
+      <kana-list font="{{fontSelected}}" kana="{{hiragana}}"></kana-list>
     </section>
   </template>
 
   <script>
     Polymer({
-      is: 'practice-hiragana'
+      is: 'practice-hiragana',
+      properties: {
+        fontSelected: {
+          type: String,
+          value: 'wf-notosansjapanese'
+        }
+      }
     });
   </script>
 </dom-module>
