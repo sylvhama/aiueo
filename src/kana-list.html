@@ -5,6 +5,10 @@
 <dom-module id="kana-list">
   <template>
     <style include="shared-styles">
+    .tips {
+      margin: 0;
+      padding-top: 8px;
+    }
       .group__name {
         margin: 0;
         padding: 16px 0 8px 0;
@@ -49,7 +53,7 @@
         text-transform: lowercase;
       }
     </style>
-      <p>
+      <p class="tips">
         <strong>Tips:</strong> Tap on a sign to activate / desactivate it.
       </p>
       <template is="dom-repeat" items="{{kana}}" as="group">
