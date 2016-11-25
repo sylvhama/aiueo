@@ -62,7 +62,7 @@
     <iron-media-query query="(min-width: 641px)" query-matches="{{wide}}"></iron-media-query>
     <iron-ajax
         auto
-        url="../json/kana.json"
+        url="../json/kana-array.json"
         handle-as="json"
         on-response="_kanaLoaded"
         debounce-duration="300"></iron-ajax>
@@ -156,8 +156,9 @@
       },
 
       _kanaLoaded: function(e) {
-        this.hiragana = e.detail.response.hiragana;
-        this.katakana = e.detail.response.katakana;
+        var response = e.detail.response;
+        this.hiragana = response.hiragana,
+        this.katakana = response.katakana;
       }
     });
   </script>

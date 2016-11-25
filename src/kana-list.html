@@ -32,6 +32,15 @@
         text-align: center;
         display: block;
       }
+      .sign-button.keyboard-focus {
+        font-weight: normal;
+      }
+      .sign-button--disabled {
+        color: var(--app-medium-gray);
+      }
+      .sign-button--disabled .sign-button__name {
+        display: none;
+      }
       .sign-button__value {
         font-size: 20px;
       }
@@ -40,11 +49,13 @@
         text-transform: lowercase;
       }
     </style>
-
-      <template is="dom-repeat" items="{{_toArray(kana)}}" as="group">
+      <p>
+        <strong>Tips:</strong> Tap on a sign to activate / desactivate it.
+      </p>
+      <template is="dom-repeat" items="{{kana}}" as="group">
           <article class="group">
             <h2 class="group__name">{{group.name}}</h2>
-            <template is="dom-repeat" items="{{_toArray(group.value)}}" as="letter">
+            <template is="dom-repeat" items="{{group.value}}" as="letter">
                 <style include="app-grid-style">
                   :host {
                     --app-grid-columns: 5;
@@ -53,9 +64,9 @@
                 <div class="letter">
                   <h3 class="letter__name">{{letter.name}}</h3>
                   <ul class="sign app-grid">
-                    <template is="dom-repeat" items="{{_toArray(letter.value)}}" as="sign">
+                    <template is="dom-repeat" items="{{letter.value}}" as="sign">
                         <li class="item">
-                          <paper-button class="sign-button">
+                          <paper-button class$="sign-button {{_isDisabled(sign.disabled)}}" on-click="_toggleDisable">
                             <span class$="sign-button__value {{font}}">{{sign.value}}</span>
                             <br>
                             <span class="sign-button__name">{{sign.name}}</span>
@@ -71,13 +82,17 @@
   <script>
     Polymer({
       is: 'kana-list',
-      _toArray: function(obj) {
-        return Object.keys(obj).map(function(key) {
-          return {
-            name: key,
-            value: obj[key]
-          };
-        });
+      properties: {
+        kana: {
+          notify: true
+        }
+      },
+      _toggleDisable: function(e) {
+        var model = e.model;
+        model.set('sign.disabled', !model.sign.disabled);
+      },
+      _isDisabled: function(disabled) {
+        if(disabled) return 'sign-button--disabled';
       }
     });
   </script>
