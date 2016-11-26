@@ -9,6 +9,12 @@
         margin: 0;
         padding-top: 8px;
       }
+      .tips__icon {
+        width: 16px;
+        height: 16px;
+        color: #FBC02D;
+        vertical-align: text-top;
+      }
       .group__name {
         margin: 0;
         padding: 16px 0 8px 0;
@@ -56,7 +62,7 @@
       }
     </style>
       <p class="tips">
-        <strong>Tips:</strong> Tap on a sign to activate / desactivate it in the exercices.
+        <iron-icon icon="lightbulb-outline" class="tips__icon"></iron-icon> <strong>Tips:</strong> Tap on a sign to activate / desactivate it in the exercices.
       </p>
       <template is="dom-repeat" items="{{kana}}" as="group">
           <article class="group">
