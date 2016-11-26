@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-layout/app-grid/app-grid-style.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-style.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="kana-list">
@@ -35,6 +36,7 @@
         min-width: 0;
         text-align: center;
         display: block;
+        transition: color ease .25s;
       }
       .sign-button.keyboard-focus {
         font-weight: normal;
@@ -43,7 +45,7 @@
         color: var(--app-medium-gray);
       }
       .sign-button--disabled .sign-button__name {
-        display: none;
+        opacity: 0;
       }
       .sign-button__value {
         font-size: 20px;
@@ -51,6 +53,7 @@
       .sign-button__name {
         color: var(--app-medium-gray);
         text-transform: lowercase;
+        transition: opacity ease .25s;
       }
     </style>
       <p class="tips">
