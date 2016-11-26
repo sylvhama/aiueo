@@ -1,15 +1,14 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/app-layout/app-grid/app-grid-style.html">
-<link rel="import" href="../bower_components/paper-input/paper-input-style.html">
-<link rel="import" href="shared-styles.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-layout/app-grid/app-grid-style.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="kana-list">
   <template>
     <style include="shared-styles">
-    .tips {
-      margin: 0;
-      padding-top: 8px;
-    }
+      .tips {
+        margin: 0;
+        padding-top: 8px;
+      }
       .group__name {
         margin: 0;
         padding: 16px 0 8px 0;
@@ -57,7 +56,7 @@
       }
     </style>
       <p class="tips">
-        <strong>Tips:</strong> Tap on a sign to activate / desactivate it.
+        <strong>Tips:</strong> Tap on a sign to activate / desactivate it in the exercices.
       </p>
       <template is="dom-repeat" items="{{kana}}" as="group">
           <article class="group">

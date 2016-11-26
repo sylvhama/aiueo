@@ -1,7 +1,7 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="kana-list.html">
-<link rel="import" href="change-font.html">
-<link rel="import" href="shared-styles.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../elements/kana-list.html">
+<link rel="import" href="../elements/change-font.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="practice-katakana">
   <template>
@@ -17,6 +17,8 @@
 
     <section class="card">
       <h1 class="view-title">Practice Katakana</h1>
+    </section>
+    <section class="card">
       <change-font font="{{fontSelected}}"></change-font>
       <kana-list font="{{fontSelected}}" kana="{{katakana}}"></kana-list>
     </section>

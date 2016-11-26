@@ -2,10 +2,10 @@
   "entrypoint": "index.html",
   "shell": "src/my-app.html",
   "fragments": [
-    "src/the-home.html",
-    "src/practice-hiragana.html",
-    "src/practice-katakana.html",
-    "src/view-404.html"
+    "src/views/the-home.html",
+    "src/views/practice-hiragana.html",
+    "src/views/practice-katakana.html",
+    "src/views/view-404.html"
   ],
   "sourceGlobs": [
    "src/**/*",
