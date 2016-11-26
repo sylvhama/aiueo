@@ -15,6 +15,9 @@
         color: #FBC02D;
         vertical-align: text-top;
       }
+      .tips__list {
+        margin: 0;
+      }
       .group__name {
         margin: 0;
         padding: 16px 0 8px 0;
@@ -35,6 +38,7 @@
         list-style: none;
       }
       .sign-button {
+        position: relative;
         margin: 0;
         padding: 0;
         width: 100%;
@@ -49,8 +53,33 @@
       .sign-button--disabled {
         color: var(--app-medium-gray);
       }
-      .sign-button--disabled .sign-button__name {
+      .sign-button--disabled .sign-button__name,
+      .sign-button--disabled .sign-button__score {
         opacity: 0;
+      }
+      .sign-button__score {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        z-index: 1;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        transition: opacity ease .25s;
+      }
+      .sign-button__score--static {
+        position: static;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .sign-button__score--red {
+        background-color: #F44336;
+      }
+      .sign-button__score--yellow {
+        background-color: #FFEB3B;
+      }
+      .sign-button__score--green {
+        background-color: #4CAF50;
       }
       .sign-button__value {
         font-size: 20px;
@@ -62,7 +91,15 @@
       }
     </style>
       <p class="tips">
-        <iron-icon icon="lightbulb-outline" class="tips__icon"></iron-icon> <strong>Tips:</strong> Tap on a sign to activate / desactivate it in the exercices.
+        <iron-icon icon="lightbulb-outline" class="tips__icon"></iron-icon> <strong>Tips:</strong>
+        <ul class="tips__list">
+          <li>
+            Tap on a sign to activate / desactivate it in the exercices.
+          </li>
+          <li>
+            The tiny circle <span class="sign-button__score sign-button__score--static sign-button__score--red"></span> indicates your progress.
+          </li>
+        </ul>
       </p>
       <template is="dom-repeat" items="{{kana}}" as="group">
           <article class="group">
@@ -79,6 +116,7 @@
                     <template is="dom-repeat" items="{{letter.value}}" as="sign">
                         <li class="item">
                           <paper-button class$="sign-button {{_isDisabled(sign.disabled)}}" on-click="_toggleDisable">
+                            <span class$="sign-button__score {{_getScoreClass(sign.score)}}"></span>
                             <span class$="sign-button__value {{font}}">{{sign.value}}</span>
                             <br>
                             <span class="sign-button__name">{{sign.name}}</span>
@@ -105,6 +143,11 @@
       },
       _isDisabled: function(disabled) {
         if(disabled) return 'sign-button--disabled';
+      },
+      _getScoreClass: function(score) {
+        if(score<2) return 'sign-button__score--red';
+        else if(score>=4) return 'sign-button__score--green';
+        else return 'sign-button__score--yellow';
       }
     });
   </script>
