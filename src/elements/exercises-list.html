@@ -2,7 +2,6 @@
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="kana-to-romaji.html">
 <link rel="import" href="romaji-to-kana.html">
-<link rel="import" href="type-kana.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="exercises-list">
@@ -36,7 +35,6 @@
       <div class="list-buttons">
         <paper-button class="red" raised on-click="_startExercise" data-exercise="kana-to-romaji">Kana to Romaji</paper-button>
         <paper-button class="red" raised on-click="_startExercise" data-exercise="romaji-to-kana">Romaji to Kana</paper-button>
-        <paper-button class="red" raised on-click="_startExercise" data-exercise="type-kana">Type Kana</paper-button>
         <label>Number of questions: {{limit}}</label>
         <paper-slider pin="true" class="red" value="{{limit}}" min="5" max="150" step="5"></paper-slider>
       </div>
