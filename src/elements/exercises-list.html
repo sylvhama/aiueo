@@ -36,7 +36,7 @@
         <paper-button class="red" raised on-click="_startExercise" data-exercise="kana-to-romaji">Kana to Romaji</paper-button>
         <paper-button class="red" raised on-click="_startExercise" data-exercise="romaji-to-kana">Romaji to Kana</paper-button>
         <label>Number of questions: {{limit}}</label>
-        <paper-slider pin="true" class="red" value="{{limit}}" min="5" max="150" step="5"></paper-slider>
+        <paper-slider pin="true" class="red" value="{{limit}}" min="5" max="40" step="5"></paper-slider>
       </div>
     </template>
     <template is="dom-if" if="{{!_isSelectedExercice('none', exercise)}}">
@@ -66,7 +66,7 @@
           type: String
         },
         limit: {
-          value: 30,
+          value: 20,
           type: Number
         },
         randomKana: {
