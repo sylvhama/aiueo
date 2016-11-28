@@ -52,9 +52,6 @@
     <template is="dom-if" if="{{_isSelectedExercice('romaji-to-kana', exercise)}}" restamp="true">
       <romaji-to-kana kana="{{kana}}" random-kana="{{randomKana}}" font="{{font}}" one-column-kana="{{oneColumnKana}}" exercise="{{exercise}}" hide-u-i={{hideUI}}></romaji-to-kana>
     </template>
-    <template is="dom-if" if="{{_isSelectedExercice('type-kana', exercise)}}" restamp="true">
-      <type-kana kana="{{kana}}" random-kana="{{randomKana}}" font="{{font}}" one-column-kana="{{oneColumnKana}}" exercise="{{exercise}}" hide-u-i={{hideUI}}></type-kana>
-    </template>
   </template>
   <script>
     Polymer({
