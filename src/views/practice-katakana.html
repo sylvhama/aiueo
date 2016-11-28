@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../elements/kana-list.html">
 <link rel="import" href="../elements/change-font.html">
+<link rel="import" href="../elements/exercises-list.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="practice-katakana">
@@ -11,16 +12,20 @@
         padding: 10px;
       }
     </style>
-
     <section class="card">
+    <template is="dom-if" if="{{!hideUI}}">
       <h1 class="view-title">Practice Katakana</h1>
+    </template>
+    <exercises-list kana="{{katakana}}" hide-u-i="{{hideUI}}" font="{{fontSelected}}"></exercises-list>
     </section>
-    <section class="card">
-      <change-font font="{{fontSelected}}"></change-font>
-    </section>
-    <section class="card">
-      <kana-list font="{{fontSelected}}" kana="{{katakana}}"></kana-list>
-    </section>
+    <template is="dom-if" if="{{!hideUI}}">
+      <section class="card">
+        <change-font font="{{fontSelected}}"></change-font>
+      </section>
+      <section class="card">
+        <kana-list font="{{fontSelected}}" kana="{{katakana}}"></kana-list>
+      </section>
+    </template>
   </template>
 
   <script>
@@ -30,6 +35,10 @@
         fontSelected: {
           type: String,
           value: 'wf-notosansjapanese'
+        },
+        hideUI: {
+          type: Boolean,
+          value: false
         }
       }
     });
