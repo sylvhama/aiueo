@@ -1,0 +1,135 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="kana-to-romaji.html">
+<link rel="import" href="romaji-to-kana.html">
+<link rel="import" href="type-kana.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="exercises-list">
+  <template>
+    <style include="shared-styles">
+      .list-buttons paper-button.red {
+        margin: 0 auto 16px auto;
+        width: 170px;
+        display: block;
+        text-align: center;
+      }
+      label {
+        padding-top: 16px;
+        width: 100%;
+        text-align: center;
+        display: inline-block;
+      }
+      .list-buttons--none {
+        padding-bottom: 32px;
+      }
+      paper-slider.red {
+        margin: 0 auto;
+        --paper-slider-active-color: var(--app-primary-color);
+        --paper-slider-knob-color: var(--app-primary-color);
+        --paper-slider-pin-color: var(--app-primary-color);
+      }
+
+    </style>{{kana}}
+    <template is="dom-if" if="{{_isSelectedExercice('none', exercise)}}">
+      <h3>Select an exercise: </h3>
+      <div class="list-buttons">
+        <paper-button class="red" raised on-click="_startExercise" data-exercise="kana-to-romaji">Kana to Romaji</paper-button>
+        <paper-button class="red" raised on-click="_startExercise" data-exercise="romaji-to-kana">Romaji to Kana</paper-button>
+        <paper-button class="red" raised on-click="_startExercise" data-exercise="type-kana">Type Kana</paper-button>
+        <label>Number of questions: {{limit}}</label>
+        <paper-slider pin="true" class="red" value="{{limit}}" min="5" max="150" step="5"></paper-slider>
+      </div>
+    </template>
+    <template is="dom-if" if="{{!_isSelectedExercice('none', exercise)}}">
+      <div class="list-buttons list-buttons--none">
+        <paper-button raised on-click="_startExercise" data-exercise="none"><iron-icon icon="chevron-left"></iron-icon> Return</paper-button>
+      </div>
+    </template>
+    <template is="dom-if" if="{{_isSelectedExercice('kana-to-romaji', exercise)}}" restamp="true">
+      <kana-to-romaji kana="{{kana}}" random-kana="{{randomKana}}" font="{{font}}" one-column-kana="{{oneColumnKana}}" exercise="{{exercise}}" hide-u-i={{hideUI}}></kana-to-romaji>
+    </template>
+    <template is="dom-if" if="{{_isSelectedExercice('romaji-to-kana', exercise)}}" restamp="true">
+      <romaji-to-kana kana="{{kana}}" random-kana="{{randomKana}}" font="{{font}}" one-column-kana="{{oneColumnKana}}" exercise="{{exercise}}" hide-u-i={{hideUI}}></romaji-to-kana>
+    </template>
+    <template is="dom-if" if="{{_isSelectedExercice('type-kana', exercise)}}" restamp="true">
+      <type-kana kana="{{kana}}" random-kana="{{randomKana}}" font="{{font}}" one-column-kana="{{oneColumnKana}}" exercise="{{exercise}}" hide-u-i={{hideUI}}></type-kana>
+    </template>
+  </template>
+  <script>
+    Polymer({
+      is: 'exercises-list',
+      properties: {
+        kana: {
+          notify: true
+        },
+        hideUI: {
+          notify: true
+        },
+        exercise: {
+          value: 'none',
+          type: String
+        },
+        limit: {
+          value: 30,
+          type: Number
+        },
+        randomKana: {
+          type: Array
+        },
+        oneColumnKana: {
+          type: Array
+        }
+      },
+
+      _toOneColumn: function(kana) {
+        var tab = [];
+        kana.map(function(group){
+          var groupName = group.name;
+          group.value.map(function(letter){
+            var LetterName = letter.name;
+            letter.value.map(function(sign){
+              tab.push({
+                name: sign.name,
+                value: sign.value,
+                disabled: sign.disabled,
+                group: groupName,
+                letter: LetterName
+              });
+            });
+          });
+        });
+        return tab;
+      },
+
+      _startExercise: function(e) {
+        this.exercise = e.target.getAttribute('data-exercise');
+        if(this.exercise !== 'none') {
+          this.oneColumnKana = this._toOneColumn(this.kana);
+          this.randomKana = [];
+          var numberDisabled = this.oneColumnKana.filter(function(sign){
+            return !sign.disabled;
+          }).length;
+          if(numberDisabled>0) {
+            this.hideUI = true;
+            while(this.randomKana.length < this.limit) {
+              var rand = this.oneColumnKana[Math.floor(Math.random() * this.oneColumnKana.length)];
+              if(!rand.disabled) this.randomKana.push(rand);
+            }
+          }
+        }else {
+          this.hideUI = false;
+          this.randomKana = [];
+        }
+      },
+
+      _isSelectedExercice: function(ex1, ex2) {
+        return ex1 === ex2;
+      },
+
+      _checkNumber: function(e) {
+        if(this.limit<=0 || this.limit===null) this.limit = 30;
+      }
+    });
+  </script>
+</dom-module>

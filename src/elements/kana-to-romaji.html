@@ -1,0 +1,179 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../../bower_components/app-layout/app-grid/app-grid-style.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="kana-to-romaji">
+  <template>
+    <style include="shared-styles">
+      .sign {
+        margin: 0;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        line-height: 1;
+        font-size: 60px;
+        text-align: center
+      }
+      .choices-list.app-grid {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 320px;
+        list-style: none;
+        text-align: center;
+      }
+      .wrong-answer {
+        background-color: #F44336;
+        color: #fff;
+      }
+      .correct-answer {
+        background-color: #4CAF50;
+        color: #fff;
+      }
+      .next-button {
+        transition: opacity ease .25s, visibility ease .25s;
+      }
+      .next-button--hidden {
+        visibility: hidden;
+        opacity: 0;
+      }
+      .progress, .next {
+        margin: 0;
+        padding-bottom: 16px;
+        text-align: center;
+      }
+      .next {
+        padding-top: 16px;
+      }
+      .progress {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      paper-progress.red {
+        width: 100%;
+        --paper-progress-active-color: var(--app-primary-color);
+        --paper-progress-secondary-color: var(--app-primary-color);
+      }
+    </style>
+    <style include="app-grid-style">
+      :host {
+        --app-grid-columns: 3;
+        --app-grid-item-height: 60px;
+      }
+    </style>
+    <p class$="sign {{font}}">
+      {{sign.value}}
+    </p>
+    <ul class="choices-list app-grid">
+      <template is="dom-repeat" items="{{choices}}" as="choice">
+        <li class="choices-list__item item">
+          <paper-button raised class$="sign-button {{_getCorrectClass(waitNext, choice)}}" on-click="_sendChoice" disabled="{{waitNext}}">
+            {{choice}}
+          </paper-button>
+        </li>
+      </template>
+    </ul>
+    <p class="next">
+      <paper-button raised on-click="_askNextSign" class$="next-button {{nextBtnClass}}" disabled="{{!waitNext}}">
+        Next <iron-icon icon="chevron-right"></iron-icon>
+      </paper-button>
+    </p>
+    <paper-progress value="{{index}}" min="0" max="{{randomKana.length}}" class="red transiting"></paper-progress>
+    <p class="progress">{{index}} / {{randomKana.length}}</p>
+  </template>
+  <script>
+    Polymer({
+      is: 'kana-to-romaji',
+      properties: {
+        index: {
+          type: Number,
+          value: 0
+        },
+        kana: {
+          notify: true
+        },
+        exercise: {
+          notify: true
+        },
+        hideUI: {
+          notify: true
+        },
+        waitNext: {
+          type: Boolean,
+          value: false
+        },
+        nextBtnClass: {
+          type: String,
+          value: 'next-button--hidden'
+        }
+      },
+
+      ready: function() {
+        this.index = 0;
+        this._nextSign();
+      },
+
+      _nextSign: function() {
+        this.waitNext = false;
+        this.result = {};
+        this.nextBtnClass = 'next-button--hidden';
+        this.sign = this.randomKana[this.index];
+        this.index++;
+        this.choices = [];
+        var randomIndex = Math.floor(Math.random() * 6),
+            actualIndex = 0;
+        while(this.choices.length<6) {
+          if(randomIndex===actualIndex) {
+            this.push('choices', this.sign.name);
+          }else {
+            var randomName = this.oneColumnKana[Math.floor(Math.random() * this.oneColumnKana.length)].name;
+            if(this.sign.name!==randomName) this.push('choices', randomName);
+          }
+          actualIndex++;
+        }
+      },
+
+      _sendChoice: function(e) {
+        var theChoice = e.model.choice,
+            theSign = this.sign,
+            scoreUpdate = 1;
+        if(theChoice === this.sign.name) {
+          this.result = {correct:true, name: theChoice};
+        }else {
+          this.result = {correct:false, name: theChoice};
+          scoreUpdate = -2;
+        }
+        var groupIndex = this.kana.findIndex(function(group){
+          return group.name === theSign.group;
+        });
+        var letterIndex = this.kana[groupIndex].value.findIndex(function(letter){
+          return letter.name === theSign.letter;
+        });
+        var signIndex = this.kana[groupIndex].value[letterIndex].value.findIndex(function(sign){
+          return sign.value === theSign.value;
+        });
+        var toUpdate = this.kana[groupIndex].value[letterIndex].value[signIndex]
+        toUpdate.score = toUpdate.score + scoreUpdate;
+        if(toUpdate.score < 0) toUpdate.score = 0;
+        if(toUpdate.score > 4) toUpdate.score = 4;
+        this.kana = JSON.parse(JSON.stringify(this.kana));
+        this.nextBtnClass = '';
+        this.waitNext = true;
+      },
+
+      _getCorrectClass: function(wait, choice){
+        if(!wait) return ''
+        else if(choice === this.sign.name) return 'correct-answer';
+        else if(!this.result.correct && choice === this.result.name) return 'wrong-answer';
+      },
+
+      _askNextSign: function(e) {
+        if(this.index < this.randomKana.length) {
+          this._nextSign();
+        }else {
+          this.hideUI = false;
+          this.exercise = 'none';
+        }
+      }
+    });
+  </script>
+</dom-module>

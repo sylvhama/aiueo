@@ -5,19 +5,6 @@
 <dom-module id="kana-list">
   <template>
     <style include="shared-styles">
-      .tips {
-        margin: 0;
-        padding-top: 8px;
-      }
-      .tips__icon {
-        width: 16px;
-        height: 16px;
-        color: #FBC02D;
-        vertical-align: text-top;
-      }
-      .tips__list {
-        margin: 0;
-      }
       .group__name {
         margin: 0;
         padding: 16px 0 8px 0;
@@ -67,16 +54,11 @@
         border-radius: 50%;
         transition: opacity ease .25s;
       }
-      .sign-button__score--static {
-        position: static;
-        display: inline-block;
-        vertical-align: middle;
-      }
       .sign-button__score--red {
         background-color: #F44336;
       }
       .sign-button__score--yellow {
-        background-color: #FFEB3B;
+        background-color: #FBC02D;
       }
       .sign-button__score--green {
         background-color: #4CAF50;
@@ -90,17 +72,6 @@
         transition: opacity ease .25s;
       }
     </style>
-      <p class="tips">
-        <iron-icon icon="lightbulb-outline" class="tips__icon"></iron-icon> <strong>Tips:</strong>
-        <ul class="tips__list">
-          <li>
-            Tap on a sign to activate / desactivate it in the exercices.
-          </li>
-          <li>
-            The tiny circle <span class="sign-button__score sign-button__score--static sign-button__score--red"></span> indicates your progress.
-          </li>
-        </ul>
-      </p>
       <template is="dom-repeat" items="{{kana}}" as="group">
           <article class="group">
             <h2 class="group__name">{{group.name}}</h2>
@@ -132,11 +103,6 @@
   <script>
     Polymer({
       is: 'kana-list',
-      properties: {
-        kana: {
-          notify: true
-        }
-      },
       _toggleDisable: function(e) {
         var model = e.model;
         model.set('sign.disabled', !model.sign.disabled);

@@ -10,8 +10,29 @@
 				display: block;
 			};
     	paper-radio-button.red {
-        	--paper-radio-button-checked-color: var(--app-primary-color);
-         }
+        --paper-radio-button-checked-color: var(--app-primary-color);
+      }
+      .tips {
+        margin: 0;
+        padding-top: 8px;
+      }
+      .tips__icon {
+        width: 16px;
+        height: 16px;
+        color: #FBC02D;
+        vertical-align: text-top;
+      }
+      .tips__list {
+        margin: 0;
+      }
+      .tips__circle {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: middle;
+        background-color: #F44336;
+      }
     </style>
 		<label id="fonts">Change the font:</label>
 		<paper-radio-group selected="{{font}}" aria-labelledby="fonts">
@@ -25,6 +46,17 @@
 		  	<span class="wf-nicomoji">あ ア</span>
 		  </paper-radio-button>
 		</paper-radio-group>
+    <p class="tips">
+      <iron-icon icon="lightbulb-outline" class="tips__icon"></iron-icon> Tips:
+      <ul class="tips__list">
+        <li>
+          Tap on a sign to activate / desactivate it in the exercises.
+        </li>
+        <li>
+          The tiny circle <span class="tips__circle"></span> indicates your progress.
+        </li>
+      </ul>
+    </p>
   </template>
   <script>
     Polymer({

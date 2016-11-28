@@ -13,6 +13,7 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-localstorage/iron-localstorage.html">
 <link rel="import" href="./elements/my-icons.html">
 <link rel="import" href="shared-styles.html">
 
@@ -59,10 +60,19 @@
         font-size: 14px;
       }
     </style>
-    <iron-media-query query="(min-width: 641px)" query-matches="{{wide}}"></iron-media-query>
+    <iron-media-query
+    query="(min-width: 641px)"
+    query-matches="{{wide}}"></iron-media-query>
+    <iron-localstorage
+    name="hiragana-storage"
+    value="{{hiragana}}"
+    on-iron-localstorage-load-empty="_callAjax"></iron-localstorage>
+    <iron-localstorage
+    name="katakana-storage"
+    value="{{katakana}}"></iron-localstorage>
     <iron-ajax
         auto
-        url="../json/kana-array.json"
+        url="{{jsonURL}}"
         handle-as="json"
         on-response="_kanaLoaded"
         debounce-duration="300"></iron-ajax>
@@ -82,14 +92,12 @@
           <a name="practice-katakana" href="/practice-katakana" drawer-toggle>Practice Katakana</a>
         </iron-selector>
         <br>
-        <template is="dom-if" if="{{!wide}}">
-          <div class="text-center">
-            <paper-button raised class="close-button" drawer-toggle>
-              <iron-icon icon="close" drawer-toggle></iron-icon>
-              Close the menu
-          </paper-button>
-          </div>
-        </template>
+        <div class="text-center" hidden$="{{wide}}">
+          <paper-button raised class="close-button" drawer-toggle>
+            <iron-icon icon="close" drawer-toggle></iron-icon>
+            Close the menu
+        </paper-button>
+        </div>
       </app-drawer>
 
       <!-- Main content -->
@@ -111,8 +119,8 @@
             fallback-selection="view404"
             role="main">
           <the-home name="home"></the-home>
-          <practice-hiragana name="practice-hiragana" hiragana="{{hiragana}}"></practice-hiragana>
-          <practice-katakana name="practice-katakana" katakana="{{katakana}}"></practice-katakana>
+          <practice-hiragana hiragana="{{hiragana}}" name="practice-hiragana"></practice-hiragana>
+          <practice-katakana katakana="{{katakana}}" name="practice-katakana"></practice-katakana>
           <view-404 name="view-404"></vivew-404>
         </iron-pages>
       </app-header-layout>
@@ -128,18 +136,21 @@
           type: String,
           reflectToAttribute: true,
           observer: '_pageChanged'
-        },
-        hiragana: {
-          type: Object
-        },
-        katakana: {
-          type: Object
         }
       },
 
       observers: [
         '_routePageChanged(routeData.page)'
       ],
+
+      ready: function() {
+        if (typeof(Storage) !== "undefined") {
+          var hiragana = JSON.parse(localStorage.getItem("hiragana-storage")),
+              katakana = JSON.parse(localStorage.getItem("katakana-storage"));
+          if(hiragana!==null) this.hiragana = hiragana;
+          if(katakana!==null) this.katakana = katakana;
+        }
+      },
 
       _routePageChanged: function(page) {
         this.page = page || 'home';
@@ -155,9 +166,13 @@
         this.page = 'view-404';
       },
 
+      _callAjax: function() {
+        this.jsonURL = '../json/kana-array.json';
+      },
+
       _kanaLoaded: function(e) {
         var response = e.detail.response;
-        this.hiragana = response.hiragana,
+        this.hiragana = response.hiragana;
         this.katakana = response.katakana;
       }
     });
