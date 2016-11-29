@@ -1,6 +1,6 @@
 # aiueO
 
-Web app to practice Hirgana and Katana ,ade with Polymer.
+Web app to practice Hirgana and Katana made with Polymer. Demo: http://aiueo.shamann.fr/
 
 ### Setup
 
