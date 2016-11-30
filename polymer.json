@@ -2,7 +2,7 @@
   "entrypoint": "index.html",
   "shell": "src/my-app.html",
   "fragments": [
-    "src/views/the-home.html",
+    "src/views/home.html",
     "src/views/practice-hiragana.html",
     "src/views/practice-katakana.html",
     "src/views/view-404.html"
@@ -13,7 +13,7 @@
    "bower.json"
   ],
   "includeDependencies": [
-    "manifest.json",
+    "images/manifest/manifest.json",
     "bower_components/webcomponentsjs/webcomponents-lite.min.js"
   ]
 }
