@@ -1,6 +1,14 @@
 # aiueO
 
-Web app to practice Hirgana and Katana made with Polymer. Demo: http://aiueo.shamann.fr/
+It's a Progressive Web App to practice Hirgana and Katana made with Polymer. 
+* Demo: https://aiueo.shamann.fr/
+* I use iron-ajax to load the JSON containing the characters;
+* I use iron-localstorage to save locally the user progression and his settings;
+* The Service Worker provided by Polymer combined with the localstorage make the app usable offline;
+* I have tried to use Material Design components as much as possible;
+* The Hiragana and Katanana views re-use the same custom elements;
+* I have found the Japanese fonts there: https://googlefonts.github.io/japanese/
+* Please add it to your homescreen for a complete experience!
 
 ### Setup
 
