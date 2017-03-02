@@ -1,6 +1,6 @@
 # aiueO
 
-It's a Progressive Web App to practice Hirgana and Katana made with Polymer. 
+It's a Progressive Web App to practice Hirgana and Katakana made with Polymer. 
 * Demo: https://aiueo.shamann.fr/
 * I use iron-ajax to load the JSON containing the characters;
 * I use iron-localstorage to save locally the user progression and his settings;
