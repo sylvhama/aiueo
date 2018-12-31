@@ -1,0 +1,14 @@
+{
+  "name": "aiueO",
+  "version": "1.0.0",
+  "description": "Practice Hiragana and Katakana",
+  "main": "index.html",
+  "scripts": {
+    "start": "polymer serve --open",
+    "build": "polymer build"
+  },
+  "dependencies": {
+    "polymer-cli": "1.9.4"
+  },
+  "devDependencies": {}
+}
