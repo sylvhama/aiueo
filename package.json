@@ -5,10 +5,10 @@
   "main": "index.html",
   "scripts": {
     "start": "polymer serve --open",
-    "build": "polymer build"
+    "build": "polymer build "
   },
   "dependencies": {
-    "polymer-cli": "1.9.4"
+    "polymer-cli": "^0.16.0"
   },
   "devDependencies": {}
 }
